@@ -8,11 +8,12 @@ import {
   ListItemText,
   Toolbar,
 } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import React from "react";
 import HomeIcon from "@mui/icons-material/Home.js";
 import DeleteIcon from "@mui/icons-material/Delete.js";
 import Profile from "./Profile.jsx";
-const SideBar = ({ toggleHome, toggleRemove }) => {
+const SideBar = ({ toggleHome, toggleRemove, toggleAdd }) => {
   return (
     <Box>
       <Toolbar>
@@ -21,14 +22,22 @@ const SideBar = ({ toggleHome, toggleRemove }) => {
 
       <Divider />
       <List>
-        {["Home", "Deleted Note"].map((text, index) => (
+        {["Home", "Deleted Note", "Add note"].map((text, index) => (
           <ListItem
             key={text}
-            onClick={index === 0 ? toggleRemove : toggleHome}
+            onClick={
+              index === 0 ? toggleRemove : index === 1 ? toggleHome : toggleAdd
+            }
           >
             <ListItemButton>
               <ListItemIcon>
-                {index % 2 === 0 ? <HomeIcon /> : <DeleteIcon />}
+                {index === 0 ? (
+                  <HomeIcon />
+                ) : index === 1 ? (
+                  <DeleteIcon />
+                ) : (
+                  <AddCircleOutlineIcon />
+                )}
               </ListItemIcon>
               <ListItemText sx={{ color: "#78909c !important" }}>
                 {text}
