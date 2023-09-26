@@ -2,6 +2,7 @@ import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import Typography from "@mui/material/Typography";
+import { Box, CardActions, CardHeader } from "@mui/material";
 
 const cardData = [
   { title: "Card 1", content: "Content for Card 1" },
@@ -11,8 +12,7 @@ const cardData = [
   { title: "Card 2", content: "Content for Card 2" },
   {
     title: "Card 3",
-    content:
-      "Content sss sssssss  sssssssas asa saas asa asasaas assaas saas sasaa sasa  ass asa saas sa saas ssssss ssssssssss  sssss sssssss sssssssss ssssss ssssssss sssssssssss sssss ssssss ssssssss sssss sssss ssssssss sssss sssss sssssfor Card 3",
+    content: "oaM maas msadS",
   },
   // Add more card data as needed
 ];
@@ -24,8 +24,9 @@ const CardGrid = () => {
         <Grid item xs={12} sm={6} md={3} key={index}>
           <Card
             style={{
-              minHeight: "150px",
-              maxHeight: "150px",
+              minHeight: "200px",
+              maxWidth: "100%",
+              position: "relative",
             }}
           >
             <CardContent>
@@ -43,11 +44,20 @@ const CardGrid = () => {
               <Typography
                 variant="body2"
                 textAlign={"start"}
-                sx={{ color: "#78909c" }}
+                sx={{
+                  color: "#78909c",
+                }}
               >
                 {card.content}
               </Typography>
             </CardContent>
+            <CardActions
+              sx={{ position: "absolute", bottom: "0px", right: "10px" }}
+            >
+              <Typography variant="body2" color="#78909c">
+                osmaa
+              </Typography>
+            </CardActions>
           </Card>
         </Grid>
       ))}
