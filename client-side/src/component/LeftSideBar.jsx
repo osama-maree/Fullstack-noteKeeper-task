@@ -14,33 +14,24 @@ import HomeIcon from "@mui/icons-material/Home.js";
 import DeleteIcon from "@mui/icons-material/Delete.js";
 import Profile from "./Profile.jsx";
 const SideBar = ({ toggleHome, toggleRemove, toggleAdd }) => {
+  const data = [
+    { title: "Home", icon: <HomeIcon />, fun: toggleRemove },
+    { title: "Deleted Note", icon: <DeleteIcon />, fun: toggleHome },
+    { title: "Add note", icon: <AddCircleOutlineIcon />, fun: toggleAdd },
+  ];
   return (
     <Box>
       <Toolbar>
-        <Profile />
+        <Profile img={"myImg.png"}title={"Osama Maree"} />
       </Toolbar>
-
       <Divider />
       <List>
-        {["Home", "Deleted Note", "Add note"].map((text, index) => (
-          <ListItem
-            key={text}
-            onClick={
-              index === 0 ? toggleRemove : index === 1 ? toggleHome : toggleAdd
-            }
-          >
+        {data.map((item, index) => (
+          <ListItem key={index} onClick={item.fun}>
             <ListItemButton>
-              <ListItemIcon>
-                {index === 0 ? (
-                  <HomeIcon />
-                ) : index === 1 ? (
-                  <DeleteIcon />
-                ) : (
-                  <AddCircleOutlineIcon />
-                )}
-              </ListItemIcon>
+              <ListItemIcon>{item.icon}</ListItemIcon>
               <ListItemText sx={{ color: "#78909c !important" }}>
-                {text}
+                {item.title}
               </ListItemText>
             </ListItemButton>
           </ListItem>

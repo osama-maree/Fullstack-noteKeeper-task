@@ -8,8 +8,12 @@ import {
 import { format } from "date-fns";
 import React from "react";
 import CloseIcon from "@mui/icons-material/Close";
-
-const ListItem = ({ card, deleteNote }) => {
+import TransitionsModal from "./EditModal.jsx";
+import EditIcon from "@mui/icons-material/Edit";
+const ListItem = ({ card, deleteNote, setNote }) => {
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
   return (
     <Grid item xs={12} sm={6} md={3}>
       <Card
@@ -35,11 +39,23 @@ const ListItem = ({ card, deleteNote }) => {
             component="div"
             sx={{
               marginBottom: "1rem",
-              color: "#1de9b6 ",
-              textDecoration: "underline",
+              display: "flex",
+              alignItems: "center",
+              borderBottom: "1px solid #1de9b6",
             }}
           >
             {card.title}
+            <EditIcon
+              onClick={handleOpen}
+              sx={{
+                marginLeft: ".5rem",
+                cursor: "pointer",
+                border: "1px solid #000",
+                borderRadius: "50%",
+                padding: "2px",
+              }}
+              fontSize="small"
+            />
           </Typography>
           <Typography
             variant="body2"
@@ -59,6 +75,12 @@ const ListItem = ({ card, deleteNote }) => {
           >
             {format(new Date(card.createdAt), "dd MMM, yyyy hh:mm a")}
           </Typography>
+          <TransitionsModal
+            handleClose={handleClose}
+            open={open}
+            card={card}
+            setNote={setNote}
+          />
         </CardActions>
       </Card>
     </Grid>

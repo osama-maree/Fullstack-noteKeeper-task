@@ -59,9 +59,6 @@ const CardGrid = () => {
     setInputs({ ...input, [name]: value });
     console.log(input);
   };
-  useEffect(() => {
-    console.log(input);
-  }, [input]);
   return (
     <Grid container spacing={2}>
       <Grid item xs={12} sm={12} md={12}>
@@ -69,7 +66,12 @@ const CardGrid = () => {
       </Grid>
       {note
         ? note.map((card) => (
-            <ListItem key={card._id} card={card} deleteNote={deleteNote} />
+            <ListItem
+              key={card._id}
+              card={card}
+              deleteNote={deleteNote}
+              setNote={setNote}
+            />
           ))
         : "loading..."}
     </Grid>
