@@ -3,8 +3,7 @@ import { pagination } from "../services/pagination.js";
 
 export const RetrieveNotes = async (req, res, next) => {
   try {
-
-    const notes = await noteModel.find({deleted:req.body.status});
+    const notes = await noteModel.find({ deleted: req.params.status });
     res.status(200).json(notes);
   } catch (err) {
     return next(new Error(err.message, { cause: 500 }));
@@ -31,7 +30,7 @@ export const DeleteNote = async (req, res, next) => {
     if (deleteNote) {
       res.status(200).json({ message: "success deleted", deleteNote });
     } else {
-      return next(new Error("Error in Added", { cause: 400 }));
+      return next(new Error("Error in Deleted", { cause: 400 }));
     }
   } catch (err) {
     next(new Error(err.message, { cause: 500 }));
@@ -59,6 +58,27 @@ export const UpdateNote = async (req, res, next) => {
   }
 };
 
+export const deleteNote = async (req, res, next) => {
+  try {
+    const { status } = req.body;
+    console.log(status);
+    const { id } = req.params;
+    const updateNote = await noteModel.findByIdAndUpdate(
+      id,
+      {
+        deleted: status,
+      },
+      { new: true }
+    );
+    if (updateNote) {
+      res.status(200).json({ message: "success updated", updateNote });
+    } else {
+      return next(new Error("Error in Added", { cause: 400 }));
+    }
+  } catch (err) {
+    next(new Error(err.message, { cause: 500 }));
+  }
+};
 // bonus  get notes using query with pagination
 export const RetrieveNotesWithPagination = async (req, res, next) => {
   try {
@@ -77,12 +97,13 @@ export const SearchBaseQuery = async (req, res, next) => {
     const { content, title } = req.query;
     const SearchRes = await noteModel.find({
       $or: [
-        { title: { $regex: title, $options: "i" } },
-        { content: { $regex: content, $options: "i" } },
+        { title: { $regex: new RegExp(`^${title}`) } },
+        { content: { $regex: new RegExp(`^${content}`) } },
       ],
     });
     res.status(200).json(SearchRes);
   } catch (err) {
-    next(new Error(err.message, { cause: 500 }));
+    return res.json(err);
+    next(new Error(err, { cause: 500 }));
   }
 };

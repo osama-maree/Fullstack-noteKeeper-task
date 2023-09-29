@@ -8,22 +8,32 @@ import MenuIcon from "@mui/icons-material/Menu.js";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import SideBar from "../component/LeftSideBar.jsx";
-import CardGrid from "../component/MyCard.jsx";
+import CardGrid from "./MyCard.jsx";
+import AddNote from "./AddNote.jsx";
+import DeletedItem from "./DeletedItem.jsx";
 const drawerWidth = 240;
 const Home = () => {
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [home, setHome] = React.useState(true);
   const [remove, setRemove] = React.useState(false);
+  const [add, setAdd] = React.useState(false);
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
   const toggleHome = () => {
     setHome(false);
+    setAdd(false);
     setRemove(true);
   };
   const toggleRemove = () => {
     setHome(true);
+    setAdd(false);
     setRemove(false);
+  };
+  const toggleAdd = () => {
+    setHome(false);
+    setRemove(false);
+    setAdd(true);
   };
 
   return (
@@ -65,7 +75,7 @@ const Home = () => {
           open={mobileOpen}
           onClose={handleDrawerToggle}
           ModalProps={{
-            keepMounted: true, // Better open performance on mobile.
+            keepMounted: true, 
           }}
           sx={{
             display: { xs: "block", sm: "none" },
@@ -75,7 +85,13 @@ const Home = () => {
             },
           }}
         >
-          {<SideBar toggleHome={toggleHome} toggleRemove={toggleRemove} />}
+          {
+            <SideBar
+              toggleHome={toggleHome}
+              toggleRemove={toggleRemove}
+              toggleAdd={toggleAdd}
+            />
+          }
         </Drawer>
         <Drawer
           variant="permanent"
@@ -88,7 +104,13 @@ const Home = () => {
           }}
           open
         >
-          {<SideBar toggleHome={toggleHome} toggleRemove={toggleRemove} />}
+          {
+            <SideBar
+              toggleHome={toggleHome}
+              toggleRemove={toggleRemove}
+              toggleAdd={toggleAdd}
+            />
+          }
         </Drawer>
       </Box>
       <Box
@@ -100,8 +122,10 @@ const Home = () => {
         }}
       >
         <Toolbar />
-        {remove && <div>div</div>}
+
+        {remove && <DeletedItem />}
         {home && <CardGrid />}
+        {add && <AddNote />}
       </Box>
     </Box>
   );
